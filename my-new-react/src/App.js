@@ -7,17 +7,22 @@ class App extends Component {
   state = {
     persons: [
       { name: "Eduardo", edad: 23 },
-      { name: "Vivi", edad: 20 },
+      { name: "Vivi", edad: 20 }
+      
     ],
+    childs: []
+
   };
+
+  testFunc = () => {
+
+  }
   
-  switchNameHandler = ( nombreNuevo) => {
-    
+  switchNameHandler = ( nombreNuevo, index ) => {
+    const {persons} = this.state
+    persons[index] = { name: nombreNuevo, edad: 666 }
     this.setState({
-      persons: [
-        { name: nombreNuevo, edad: 23 },
-        { name: "Vivi2", edad: 20 },
-      ]
+      persons: [...persons]
     });
   };
 
@@ -31,18 +36,39 @@ class App extends Component {
     });
   };
 
-  render() {
-    return (
-      <div className="App">
-        <button onClick={this.switchNameHandler.bind(this, 'Holabb')}>boton</button>
-        <Person 
-          name={this.state.persons[0].name}
-          click={this.switchNameHandler.bind(this,'Esteban')}
-          changed={this.nameChangeHandler}
-          >
-          Estoy estudiando
-        </Person>
+  testRender = () => {
+    
+  }
 
+  addChildHandler = () => {
+    const { childs } = this.state;
+    const item =  {name: '',edad: ''}
+    this.setState(
+      {childs: [...childs, item]}
+    )
+
+  }
+
+
+
+   
+  render() {
+
+    return (
+
+      <div className="App">
+        <button onClick={this.addChildHandler}>boton</button>      
+        <div>
+          {this
+            .state
+              .childs
+                .map( (item, index) =>  {
+                  return (
+                    <Person name={item.name} edad={item.edad} change={ () => {} }/>
+                  )
+                })
+          }
+        </div>
       </div>
     );
   };
